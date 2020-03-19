@@ -18,9 +18,22 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+  <script src="main.dart.js" type="application/javascript"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCHkLw8ehmMkBlfYqpfNz5asErVl_O5rss",
+      authDomain: "covid19-63286.firebaseapp.com",
+      databaseURL: "https://covid19-63286.firebaseio.com",
+      projectId: "covid19-63286",
+      storageBucket: "covid19-63286.appspot.com",
+      messagingSenderId: "951813750987",
+      appId: "1:951813750987:web:e9cdadedeb9f0326699b4e",
+      measurementId: "G-5319BD1W8T"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
