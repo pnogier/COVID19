@@ -9,7 +9,6 @@ class Postalcode extends StatefulWidget {
 }
 
 class _PostalcodeState extends State<Postalcode> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +18,29 @@ class _PostalcodeState extends State<Postalcode> {
         children: <Widget>[
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-                  child: TextField(
+            child: TextField(
               controller: myController,
+              onChanged: (text) {
+                if (text.length > 1) {
+                  postalcode = text;
+                  Navigator.push(context, SlideRightRoute(page: ListScreen()));
+                }
+              },
               decoration: InputDecoration(
-                hintText: 'Code postal',
-                labelStyle: TextStyle(color: const Color(0xFF424242))
-              ),
+                  hintText: 'Numero de département',
+                  labelStyle: TextStyle(color: const Color(0xFF424242))),
             ),
           ),
-          IconButton(icon: Icon (Icons.arrow_forward, color: Colors.black,), onPressed:() => [postalcode = myController.text, Navigator.push(context, SlideRightRoute(page: ListScreen()))],)
+          IconButton(
+            icon: Icon(
+              Icons.arrow_forward,
+              color: Colors.black,
+            ),
+            onPressed: () => [
+              postalcode = myController.text,
+              Navigator.push(context, SlideRightRoute(page: ListScreen()))
+            ],
+          )
         ],
       ),
     ));
