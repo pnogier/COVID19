@@ -1,0 +1,2 @@
+bool ishospital;
+String postalcode;

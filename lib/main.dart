@@ -1,27 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'Utils/pageroutetransition.dart';
+import 'postalcode.dart';
+import 'infos.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -39,6 +32,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  void initState() {
+    ishospital = false;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: mycontent('''Je suis 
 un professionel de santé, de sécurité,
 un travailleur qui assure les fonctions vitales
-de notre pays.''', Colors.black),
+de notre pays.''', Colors.black, context, true),
                 ),
               ),
               SizedBox(
@@ -85,7 +84,7 @@ de notre pays.''', Colors.black),
                 child: Container(color: Colors.black,
                 child: mycontent('''Je suis
 un particulier, une entreprise,
-un citoyen qui souhaite apporter son aide.''', Colors.white),),
+un citoyen qui souhaite apporter son aide.''', Colors.white, context, false),),
               )
             ]),
           ),
@@ -95,7 +94,7 @@ un citoyen qui souhaite apporter son aide.''', Colors.white),),
   }
 }
 
-Widget mycontent(String text, Color color) {
+Widget mycontent(String text, Color color, BuildContext context, bool mybool) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
@@ -107,8 +106,12 @@ Widget mycontent(String text, Color color) {
       Spacer(),
       Align(
         alignment: Alignment.bottomRight,
-        child: Icon(Icons.arrow_forward, size: 250, color: color,),
+        child: SizedBox(
+          height: 250,
+          width: 250,
+          child: IconButton(icon: Icon (Icons.arrow_forward, size: 250, color: color), onPressed:() => [Navigator.push(context, SlideRightRoute(page: Postalcode())), ishospital = mybool],)),
       ),
     ],
   );
 }
+//Navigator.push(context, SlideRightRoute(page: Screen2()))
