@@ -9,11 +9,12 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  double height = 100.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: <Widget>[
-        myappbar(),
+        myappbar(context),
         StreamBuilder(
           stream: Firestore.instance
               .collection((ishospital == true) ? 'offres' : 'demandes')
@@ -24,13 +25,23 @@ class _ListScreenState extends State<ListScreen> {
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 children: snapshot.data.documents
-                    .map<Widget>(
-                      (document) => InkWell(
-                        onTap: () => print('EXAMPLE'),
-                        child: Column(children: <Widget>[
-                          Text(document['title']),
-                        ]),
-                      ),
+                    .map<Widget>((document) =>
+                          Card(
+                              child: Container(
+                            child: ExpansionTile(
+                              title: Text(document['title']),
+                              subtitle: Text(document['name'] +
+                                  ' ' +
+                                  '(' +
+                                  document['city'] +
+                                  ')'),
+                              children: <Widget>[
+                                Text(document['text'] + '\n'),
+                                Text('Tel: ' + document['contact']['phone']),
+                                Text('Mail: ' + document['contact']['mail']),
+                              ],
+                            ),
+                          )),
                     )
                     .toList(),
               );
@@ -43,9 +54,10 @@ class _ListScreenState extends State<ListScreen> {
   }
 }
 
-Widget myappbar() {
-  return SizedBox(
-    height: 200,
+Widget myappbar(BuildContext context) {
+  return Container(
+    color: Color(0xFFB2C8E9),
+    height: MediaQuery.of(context).size.width / 12,
     child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
