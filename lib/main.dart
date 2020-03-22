@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'Utils/pageroutetransition.dart';
 import 'postalcode.dart';
@@ -95,23 +94,26 @@ un citoyen qui souhaite apporter son aide.''', Colors.white, context, false),),
 }
 
 Widget mycontent(String text, Color color, BuildContext context, bool mybool) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: <Widget>[
-      Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20, color: color),
-      ),
-      Spacer(),
-      Align(
-        alignment: Alignment.bottomRight,
-        child: SizedBox(
-          height: 250,
-          width: 250,
-          child: IconButton(icon: Icon (Icons.arrow_forward, size: 250, color: color), onPressed:() => [Navigator.push(context, SlideRightRoute(page: Postalcode())), ishospital = mybool],)),
-      ),
-    ],
+  return InkWell(
+    onTap: () => [Navigator.push(context, SlideRightRoute(page: Postalcode())), ishospital = mybool],
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20, color: color),
+        ),
+        Spacer(),
+        Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.width / 4,
+            width: MediaQuery.of(context).size.width / 4,
+            child: Icon (Icons.arrow_forward, size: MediaQuery.of(context).size.width / 4, color: color))
+        ),
+      ],
+    ),
   );
 }
 //Navigator.push(context, SlideRightRoute(page: Screen2()))

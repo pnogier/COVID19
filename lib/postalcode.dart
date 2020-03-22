@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Utils/pageroutetransition.dart';
 import 'infos.dart';
+import 'list.dart';
 
 class Postalcode extends StatefulWidget {
   @override
@@ -8,13 +9,6 @@ class Postalcode extends StatefulWidget {
 }
 
 class _PostalcodeState extends State<Postalcode> {
-  final myController = TextEditingController();
-
-  void dispose() {
-    myController.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +27,7 @@ class _PostalcodeState extends State<Postalcode> {
               ),
             ),
           ),
-          IconButton(icon: Icon (Icons.arrow_forward, color: Colors.black,), onPressed:() => [postalcode = myController.text],)
+          IconButton(icon: Icon (Icons.arrow_forward, color: Colors.black,), onPressed:() => [postalcode = myController.text, Navigator.push(context, SlideRightRoute(page: ListScreen()))],)
         ],
       ),
     ));
