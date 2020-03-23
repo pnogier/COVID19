@@ -46,7 +46,7 @@ class _ListScreenState extends State<ListScreen> {
             return Column(
               children: <Widget>[
                 Container(
-                  color: Color(0xFFB2C8E9),
+                  color: Color((ishospital == true) ? 0xFFB2C8E9 : 0xFF000000),
                   height: MediaQuery.of(context).size.width / 12,
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,6 +54,8 @@ class _ListScreenState extends State<ListScreen> {
                         SizedBox(
                           width: 200,
                           child: TextField(
+                            cursorColor: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF),
+                            style: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF)),
                             controller: myController,
                             onChanged: (text) {
                               if (text.length > 1)
@@ -63,18 +65,18 @@ class _ListScreenState extends State<ListScreen> {
                                 });
                             },
                             decoration: InputDecoration(
-                                hintText: 'Code postal',
+                                hintText: 'Numéro département',
                                 labelStyle:
-                                    TextStyle(color: const Color(0xFF424242))),
+                                    TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))),
                           ),
                         ),
-                        Text('Listes des annonces'),
+                        Text('Listes des annonces', style: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))),
                         FlatButton(
                             onPressed: () => Navigator.push(
                                 context, SlideRightRoute(page: FormScreen())),
                             child: (ishospital == true)
-                                ? Text('Formuler une demande')
-                                : Text('Formuler une offre'))
+                                ? Text('Formuler une demande', style: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF)))
+                                : Text('Formuler une offre', style: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))))
                       ]),
                 ),
                 ListView(
@@ -135,10 +137,11 @@ Widget myappbar(BuildContext context) {
           SizedBox(
             width: 200,
             child: TextField(
+              cursorColor: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF),
               controller: myController,
               decoration: InputDecoration(
-                  hintText: 'Code postal',
-                  labelStyle: TextStyle(color: const Color(0xFF424242))),
+                  hintText: 'Numéro département',
+                  labelStyle: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))),
             ),
           ),
           Text('$nbcards offres trouvées'),
