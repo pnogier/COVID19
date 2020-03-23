@@ -2,6 +2,8 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'infos.dart';
+import 'Utils/pageroutetransition.dart';
+import 'form.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -10,10 +12,25 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   double height = 100.0;
+
   @override
   void initState() {
     nbbadcards = 0;
+    nbcards = 0;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    nbbadcards = 0;
+    nbcards = 0;
+    super.dispose();
+  }
+
+  changenbcard() {
+    setState(() {
+      nbbadcards++;
+    });
   }
 
   @override
@@ -26,7 +43,6 @@ class _ListScreenState extends State<ListScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             nbdocs = snapshot.data.documents.length;
-            nbcards = nbdocs - nbbadcards;
             return Column(
               children: <Widget>[
                 Container(
@@ -41,10 +57,10 @@ class _ListScreenState extends State<ListScreen> {
                             controller: myController,
                             onChanged: (text) {
                               if (text.length > 1)
-                              setState(() {
-                                nbbadcards = 0;
-                                postalcode = text;
-                              });
+                                setState(() {
+                                  nbbadcards = 0;
+                                  postalcode = text;
+                                });
                             },
                             decoration: InputDecoration(
                                 hintText: 'Code postal',
@@ -52,10 +68,13 @@ class _ListScreenState extends State<ListScreen> {
                                     TextStyle(color: const Color(0xFF424242))),
                           ),
                         ),
-                        Text('$nbcards offres trouvées'),
-                        (ishospital == true)
-                            ? Text('Formuler une demande')
-                            : Text('Formuler une offre')
+                        Text('Listes des annonces'),
+                        FlatButton(
+                            onPressed: () => Navigator.push(
+                                context, SlideRightRoute(page: FormScreen())),
+                            child: (ishospital == true)
+                                ? Text('Formuler une demande')
+                                : Text('Formuler une offre'))
                       ]),
                 ),
                 ListView(
@@ -77,14 +96,24 @@ class _ListScreenState extends State<ListScreen> {
                                     ')'),
                                 children: <Widget>[
                                   Text(document['text'] + '\n'),
-                                  Text('Tel: ' + document['contact']['phone']),
-                                  Text('Mail: ' + document['contact']['mail']),
+                                  Text('Tel: ' + document['phone']),
+                                  Text('Mail: ' + document['mail']),
                                 ],
                               ),
                             ))
                           : palabonne())
                       .toList(),
                 ),
+                Center(
+                    child: (nbbadcards == nbdocs)
+                        ? (ishospital == true)
+                            ? Text(
+                                '''Il n’y a actuellement aucune offre trouvées prés de chez vous,
+si vous avez besoin d’un service et/ou d’une aide matérielle, vous pouvez formuler une demande dés maintenant.''')
+                            : Text(
+                                '''Il n’y a actuellement aucune demandes trouvées prés de chez vous,
+si vous souhaité apporter un service et/ou une aide matérielle, vous pouvez formuler une offre dés maintenant.''')
+                        : SizedBox()),
               ],
             );
           } else
