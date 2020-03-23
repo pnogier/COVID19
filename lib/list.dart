@@ -66,6 +66,7 @@ class _ListScreenState extends State<ListScreen> {
                             },
                             decoration: InputDecoration(
                                 hintText: 'Numéro département',
+                                hintStyle: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF)),
                                 labelStyle:
                                     TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))),
                           ),
@@ -141,6 +142,7 @@ Widget myappbar(BuildContext context) {
               controller: myController,
               decoration: InputDecoration(
                   hintText: 'Numéro département',
+                  hintStyle: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF)),
                   labelStyle: TextStyle(color: Color((ishospital == true) ? 0xFF424242 : 0xFFFFFFFF))),
             ),
           ),
